@@ -6,7 +6,7 @@ public class AppUDP2 {
 
     public static void main(String[] args) throws SocketException {
         try{
-
+            //RECEBIMENTO
             System.out.print("[ Alocando porta UDP                  ..................  ");
     	    DatagramSocket socket = new DatagramSocket(20000);
             System.out.println("[OK] ]");
@@ -26,6 +26,22 @@ public class AppUDP2 {
             System.out.println("  Mensagem:             "+received_msg);
             System.out.println("  Endereço de origem:   "+origin_address.getHostAddress());
             System.out.println("  Porta de origem:      "+origin_port);
+            
+            //ENVIO
+            String msg = "Tudo bem?";
+            
+            byte[] msg_buf = msg.getBytes();
+            int msg_size = msg_buf.length;
+            //InetAddress destination_address = origin_address;
+            //int destination_port = origin_port; 
+
+            System.out.print("[ Montando datagrama UDP  ..................  ");
+            DatagramPacket packSend = new DatagramPacket(msg_buf, msg_size, origin_address, origin_port);
+            System.out.println("[OK] ]");
+            
+            System.out.print("[ Enviando datagrama UDP  ..................  ");
+            socket.send(packSend);
+            System.out.println("[OK] ]");
             
         } catch (Exception e){
             System.out.println(e.getMessage());
